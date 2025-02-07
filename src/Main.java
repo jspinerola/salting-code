@@ -11,16 +11,7 @@ public class Main {
 
         System.out.println("User's Password: " + userPassword);
 
-        StringBuilder salt = new StringBuilder();
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                + "0123456789"
-                + "abcdefghijklmnopqrstuvxyz"
-                + "!@#$%^&*()_+{}[]|:;";
-
-        for (int i = 0; i < userPassword.length(); i++) {
-            int index = (int) (AlphaNumericString.length() * Math.random());
-            salt.append(AlphaNumericString.charAt(index));
-        }
+        String salt = generateSalt(userPassword.length());
 
         System.out.println("Salt: " + salt);
 
@@ -30,9 +21,20 @@ public class Main {
 
         System.out.println("Hashed User Password:   " + hashString(userPassword));
         System.out.println("Hashed Salted Password: " + hashString(saltedPassword));
+    }
+    public static String generateSalt(int length){
+        StringBuilder salt = new StringBuilder();
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz"
+                + "!@#$%^&*()_+{}[]|:;";
 
+        for (int i = 0; i < length; i++) {
+            int index = (int) (AlphaNumericString.length() * Math.random());
+            salt.append(AlphaNumericString.charAt(index));
+        }
 
-
+        return salt.toString();
     }
     public static String hashString(String input) {
         StringBuilder hashedInput = new StringBuilder();
